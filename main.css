@@ -1,0 +1,16 @@
+body {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#app {
+  padding: 0 10%;
+  display: flex;
+  gap: 10%; 
+}
+
+svg {
+  width: 100%;
+}
