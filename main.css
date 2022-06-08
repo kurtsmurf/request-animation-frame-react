@@ -1,16 +1,20 @@
 body {
-  display: grid;
-  place-content: center;
   height: 100vh;
   margin: 0;
 }
 
 #app {
-  padding: 0 10%;
-  display: flex;
-  gap: 10%; 
+  display: grid;
+  place-content: center;
+  height: 100%;
 }
 
-svg {
-  width: 100%;
+#app,
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack.row {
+  flex-direction: row;
 }

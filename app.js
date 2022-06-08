@@ -1,3 +1,5 @@
+// @ts-check
+
 import { Fragment, h, render } from "https://cdn.skypack.dev/preact";
 import { useEffect, useState, useRef } from "https://cdn.skypack.dev/preact/hooks";
 
@@ -15,7 +17,7 @@ const App = () => {
 const AnimatingCircleOne = () => {
   const [radius, setRadius] = useState();
 
-  useAnimation(delta => setRadius(Math.abs(Math.cos(delta / 1000)) * 5));
+  useAnimation(delta => {setRadius(Math.abs(Math.cos(delta / 1000)) * 5)});
 
   return h(
     "svg",
@@ -24,37 +26,36 @@ const AnimatingCircleOne = () => {
   );
 };
 
-
 const AnimatingCircleTwo = () => {
-  const ref = useRef();
+  const radius = useRef();
 
-  useAnimation(delta => ref.current?.setAttribute('r', Math.abs(Math.cos(delta / 1000)) * 5))
+  useAnimation(delta => radius.current?.setAttribute('r', Math.abs(Math.cos(delta / 1000)) * 5))
 
   return h(
     "svg",
     { viewBox: "-5, -5, 10, 10" },
-    h("circle", { cx: 0, cy: 0, ref }),
+    h("circle", { cx: 0, cy: 0, ref: radius }),
   );
 };
 
 const useAnimation = (tick) => {
-  const [frameId, setFrameId] = useState();
-  const [start, setStart] = useState();
+  const frameId = useRef();
+  const start = useRef();
 
   const animate = () => {
-    tick(Date.now() - start)
-    setFrameId(requestAnimationFrame(animate));
+    tick(Date.now() - start.current)
+    frameId.current = requestAnimationFrame(animate);
   };
 
   useEffect(() => {
-    setStart(Date.now())
+    start.current = Date.now()
   }, []);
 
   useEffect(() => {
-    if (!start) return;
-    setFrameId(requestAnimationFrame(animate));
+    if (!start.current) return;
+    frameId.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frameId);
-  }, [start])
+  }, [start.current])
 }
 
 render(h(App), document.getElementById("app"));
