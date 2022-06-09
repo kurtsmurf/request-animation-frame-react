@@ -18,3 +18,8 @@ body {
 .stack.row {
   flex-direction: row;
 }
+
+text {
+  font: italic 1px sans-serif;
+  fill: white;
+}

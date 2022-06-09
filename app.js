@@ -9,12 +9,12 @@ const App = () => {
   return h(
     Fragment,
     {},
-    h(AnimatingCircleOne),
-    h(AnimatingCircleTwo),
+    h(AnimatingCircleUseState),
+    h(AnimatingCircleUseRef),
   );
 };
 
-const AnimatingCircleOne = () => {
+const AnimatingCircleUseState = () => {
   const [radius, setRadius] = useState();
 
   useAnimation(delta => {setRadius(Math.abs(Math.cos(delta / 1000)) * 5)});
@@ -23,10 +23,11 @@ const AnimatingCircleOne = () => {
     "svg",
     { viewBox: "-5, -5, 10, 10" },
     h("circle", { cx: 0, cy: 0, r: radius }),
+    h('text', { x: -4, y: 0}, "with useState")
   );
 };
 
-const AnimatingCircleTwo = () => {
+const AnimatingCircleUseRef = () => {
   const radius = useRef();
 
   useAnimation(delta => radius.current?.setAttribute('r', Math.abs(Math.cos(delta / 1000)) * 5))
@@ -35,6 +36,7 @@ const AnimatingCircleTwo = () => {
     "svg",
     { viewBox: "-5, -5, 10, 10" },
     h("circle", { cx: 0, cy: 0, ref: radius }),
+    h('text', { x: -1, y: 0}, "with useRef")
   );
 };
 
